@@ -1,1 +1,1 @@
-# social_blogging
+# Social Blogging
