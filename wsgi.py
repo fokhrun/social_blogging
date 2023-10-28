@@ -2,6 +2,7 @@
 import os
 from flask import Flask, render_template, session, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -16,7 +17,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "da
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 bootstrap = Bootstrap(app)
 
 
@@ -61,9 +62,9 @@ def index():
         form.name.data = ""        
         return redirect(url_for("index"))
     return render_template(
-        "index.html", 
-        form=form, 
-        name=session.get("name"), 
+        "index.html",
+        form=form,
+        name=session.get("name"),
         known=session.get("known", False)
     )
 
